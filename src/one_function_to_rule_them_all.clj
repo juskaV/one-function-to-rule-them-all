@@ -56,17 +56,40 @@
 (defn parity [a-seq]
   (reduce toggle #{} a-seq))
 
-(defn minus [x]
-  :-)
+(defn minus
+  ([x] (- x))
+  ([x y] (- x y)))
 
-(defn count-params [x]
-  :-)
+(defn count-params
+  ([] 0)
+  ([x] 1)
+  ([x & more]
+   (let [counter (fn [count item]
+                    (inc count))]
+    (reduce counter 1 more))))
 
-(defn my-* [x]
-  :-)
 
-(defn pred-and [x]
-  (fn [x] :-))
+
+(defn my-*
+  ([] 1)
+  ([x] x)
+  ([x & more]
+   (let [multiply (fn [x y]
+                    (* x y))]
+    (reduce multiply x more))))
+
+(defn test []
+  (fn [x] (and (pos? x) (odd? x))))
+
+
+(defn pred-and
+  ([] (fn [x] true))
+  ([pred] pred)
+  ([pred1 pred2] (fn [x] (and (pred1 x) (pred2 x))))
+  ([pred1 pred2 & more]
+   (reduce pred-and (pred-and pred1 pred2) more)))
+
 
 (defn my-map [f a-seq]
   [:-])
+fn [x] :-
